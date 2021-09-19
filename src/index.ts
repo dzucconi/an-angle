@@ -21,16 +21,16 @@ const handleOrientation = (event: DeviceOrientationEvent) => {
 };
 
 const init = () => {
-  x.on();
-  y.on();
-  z.on();
-
   root.innerHTML = "playing";
 
   window.addEventListener("deviceorientation", handleOrientation, true);
 };
 
 root.addEventListener("click", () => {
+  x.on();
+  y.on();
+  z.on();
+
   if (typeof DeviceOrientationEvent.requestPermission === "function") {
     DeviceOrientationEvent.requestPermission()
       .then((permissionState) => {
