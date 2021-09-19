@@ -20,7 +20,7 @@ const handleOrientation = (event: DeviceOrientationEvent) => {
   z.rotate(gamma + offset);
 };
 
-root.addEventListener("click", () => {
+const init = () => {
   x.on();
   y.on();
   z.on();
@@ -28,4 +28,18 @@ root.addEventListener("click", () => {
   root.innerHTML = "playing";
 
   window.addEventListener("deviceorientation", handleOrientation, true);
+};
+
+root.addEventListener("click", () => {
+  if (typeof DeviceOrientationEvent.requestPermission === "function") {
+    DeviceOrientationEvent.requestPermission()
+      .then((permissionState) => {
+        if (permissionState === "granted") {
+          init();
+        }
+      })
+      .catch(console.error);
+  } else {
+    root.innerHTML = "unsupported";
+  }
 });
